@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>💖 İlknur</title>
   <style>
     body{
@@ -13,7 +13,7 @@
       justify-content:center;
       background:linear-gradient(135deg,#2b0f1f,#0b1026);
       color:white;
-      font-family:system-ui;
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
       overflow:hidden;
     }
     .card{
@@ -22,27 +22,42 @@
       border-radius:24px;
       padding:28px;
       max-width:420px;
+      width: min(420px, calc(100% - 32px));
       text-align:center;
       box-shadow:0 30px 80px rgba(0,0,0,0.4);
     }
-    h1{font-size:36px;margin-bottom:10px;}
-    p{line-height:1.7;opacity:.9;}
+    h1{font-size:36px;margin:0 0 10px;}
+    p{line-height:1.7;opacity:.9;margin:0 0 6px;}
     button{
       margin-top:14px;
-      padding:12px 20px;
+      padding:12px 18px;
       border-radius:14px;
       border:none;
       font-size:15px;
       cursor:pointer;
+      width: 100%;
+      touch-action: manipulation;
     }
     .play{background:#ffd1dc;color:#1b0b12;}
     .msg{background:transparent;border:1px solid rgba(255,255,255,.3);color:white;}
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      opacity:.75;
+      line-height:1.5;
+    }
     .note{
       display:none;
       margin-top:16px;
       background:rgba(0,0,0,.25);
       padding:16px;
       border-radius:16px;
+      line-height:1.75;
+      animation: fade .6s ease;
+    }
+    @keyframes fade{
+      from{opacity:0; transform:translateY(10px);}
+      to{opacity:1; transform:translateY(0);}
     }
     .heart{
       position:fixed;
@@ -50,6 +65,7 @@
       font-size:18px;
       animation:rise linear forwards;
       pointer-events:none;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.25));
     }
     @keyframes rise{
       from{transform:translateY(0);opacity:0}
@@ -60,41 +76,86 @@
 </head>
 <body>
 
-<div class="card">
-  <h1>İlknur 💖</h1>
-  <p>
-    Seninle geçen her an kalbimde daha da büyüyen bir hikâye gibi…<br><br>
-    İyi ki varsın. İyi ki benimlesin.
-  </p>
+  <div class="card">
+    <h1>İlknur 💖</h1>
+    <p>
+      Seninle geçen her an kalbimde daha da büyüyen bir hikâye gibi…<br><br>
+      İyi ki varsın. İyi ki benimlesin.
+    </p>
 
-  <button class="play" onclick="toggleMusic()">🎵 Müziği Başlat</button><br>
-  <button class="msg" onclick="toggleNote()">💌 Mesajını Aç</button>
+    <button class="play" id="playBtn" onclick="toggleMusic()">🎵 Müziği Başlat</button>
+    <button class="msg" onclick="toggleNote()">💌 Mesajını Aç</button>
 
-  <div class="note" id="note">
-    İlknur…<br><br>
-    Gülüşün içimi sakinleştiriyor, varlığın bana ev gibi geliyor.<br><br>
-    <b>Sevgililer Günümüz kutlu olsun 🌹</b><br><br>
-    — Seni çok seven biri 💞
+    <div class="hint">
+      Not: Telefonlar müziği otomatik başlatmaz. 🎧<br>
+      Müzik için butona bir kez dokunman yeterli olmalı (bazen 2. dokunuş gerekebilir).
+    </div>
+
+    <div class="note" id="note">
+      İlknur…<br><br>
+      Gülüşün içimi sakinleştiriyor, varlığın bana ev gibi geliyor.<br><br>
+      <b>Sevgililer Günümüz kutlu olsun 🌹</b><br><br>
+      — Seni çok seven biri 💞
+    </div>
+
+    <!-- Mobil uyumluluk için muted + playsinline -->
+    <audio id="bgm" loop muted playsinline preload="auto">
+      <source src="hanimefendi.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
-  <audio id="bgm" loop>
-    <source src="hanimefendi.mp3" type="audio/mpeg">
-  </audio>
-</div>
+  <script>
+    const bgm = document.getElementById("bgm");
+    const note = document.getElementById("note");
+    const playBtn = document.getElementById("playBtn");
 
-<script>
-  const bgm=document.getElementById("bgm");
-  const note=document.getElementById("note");
-  let playing=false;
+    let playing = false;
 
-  function toggleMusic(){
-    if(!playing){bgm.play();playing=true;}
-    else{bgm.pause();playing=false;}
-  }
-  function toggleNote(){
-    note.style.display=note.style.display==="block"?"none":"block";
-    for(let i=0;i<8;i++){
-      const h=document.createElement("div");
-      h.className="heart";
-      h.textContent="❤";
-      h.style.lef
+    function toggleMusic(){
+      if(!playing){
+        // Mobilde güvenli yöntem: önce muted, sonra kullanıcı etkileşiminde unmute + play
+        bgm.muted = false;
+        bgm.volume = 1.0;
+
+        bgm.play().then(() => {
+          playing = true;
+          playBtn.textContent = "⏸ Müziği Durdur";
+        }).catch((e) => {
+          // Bazı cihazlarda ilk deneme reddedilebilir, ikinci dokunuşta açılır
+          bgm.muted = false;
+          alert("🔊 Müzik başlamadı. Lütfen butona bir kez daha dokun 💖");
+          console.log(e);
+        });
+
+      } else {
+        bgm.pause();
+        playing = false;
+        playBtn.textContent = "🎵 Müziği Başlat";
+      }
+    }
+
+    function toggleNote(){
+      note.style.display = (note.style.display === "block") ? "none" : "block";
+      spawnHearts(8);
+    }
+
+    function spawnHearts(count){
+      for(let i=0;i<count;i++){
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.textContent = Math.random() > 0.25 ? "❤" : "🤍";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.animationDuration = (Math.random()*3 + 4) + "s";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), 7000);
+      }
+    }
+
+    // Sayfa açılışında küçük efekt
+    window.addEventListener("load", () => {
+      spawnHearts(6);
+    });
+  </script>
+
+</body>
+</html>
