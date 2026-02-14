@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>💖 İlknur</title>
+  <title>💖 Şaşırmak sana çok yakışıyor</title>
+
   <style>
     body{
       margin:0;
@@ -16,18 +17,46 @@
       font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
       overflow:hidden;
     }
+
     .card{
       background:rgba(255,255,255,0.12);
       backdrop-filter:blur(10px);
       border-radius:24px;
       padding:28px;
       max-width:420px;
-      width: min(420px, calc(100% - 32px));
+      width:min(420px, calc(100% - 32px));
       text-align:center;
       box-shadow:0 30px 80px rgba(0,0,0,0.4);
     }
-    h1{font-size:36px;margin:0 0 10px;}
-    p{line-height:1.7;opacity:.9;margin:0 0 6px;}
+
+    /* ===== ANİMASYONLAR ===== */
+    @keyframes fadeUp{
+      from{opacity:0; transform:translateY(12px);}
+      to{opacity:1; transform:translateY(0);}
+    }
+
+    .animate{
+      opacity:0;
+      animation: fadeUp 1.4s ease forwards;
+    }
+
+    .delay-1{animation-delay:.2s}
+    .delay-2{animation-delay:.6s}
+    .delay-3{animation-delay:1s}
+    .delay-4{animation-delay:1.4s}
+    .delay-5{animation-delay:1.8s}
+
+    h1{
+      font-size:34px;
+      margin:0 0 14px;
+    }
+
+    p{
+      line-height:1.7;
+      opacity:.9;
+      margin:0 0 12px;
+    }
+
     button{
       margin-top:14px;
       padding:12px 18px;
@@ -35,38 +64,44 @@
       border:none;
       font-size:15px;
       cursor:pointer;
-      width: 100%;
-      touch-action: manipulation;
+      width:100%;
+      touch-action:manipulation;
     }
+
     .play{background:#ffd1dc;color:#1b0b12;}
     .msg{background:transparent;border:1px solid rgba(255,255,255,.3);color:white;}
+
     .hint{
       margin-top:10px;
       font-size:12px;
       opacity:.75;
       line-height:1.5;
     }
+
     .note{
       display:none;
-      margin-top:16px;
+      margin-top:18px;
       background:rgba(0,0,0,.25);
       padding:16px;
       border-radius:16px;
       line-height:1.75;
-      animation: fade .6s ease;
+      animation: fadeUp .8s ease forwards;
     }
-    @keyframes fade{
-      from{opacity:0; transform:translateY(10px);}
-      to{opacity:1; transform:translateY(0);}
+
+    .note i{
+      opacity:.85;
+      font-style:italic;
     }
+
     .heart{
       position:fixed;
       bottom:-20px;
       font-size:18px;
       animation:rise linear forwards;
       pointer-events:none;
-      filter: drop-shadow(0 8px 10px rgba(0,0,0,.25));
+      filter:drop-shadow(0 8px 10px rgba(0,0,0,.25));
     }
+
     @keyframes rise{
       from{transform:translateY(0);opacity:0}
       20%{opacity:1}
@@ -74,31 +109,52 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="card">
-    <h1>İlknur 💖</h1>
-    <p>
-      Seninle geçen her an kalbimde daha da büyüyen bir hikâye gibi…<br><br>
+    <h1 class="animate delay-1">Şaşırmak sana çok yakışıyor 💖</h1>
+
+    <p class="animate delay-2">
+      Seninle geçen her an kalbimde daha da büyüyen bir hikâye gibi…<br>
       İyi ki varsın. İyi ki benimlesin.
     </p>
 
-    <button class="play" id="playBtn" onclick="toggleMusic()">🎵 Müziği Başlat</button>
-    <button class="msg" onclick="toggleNote()">💌 Mesajını Aç</button>
+    <button class="play animate delay-3" id="playBtn" onclick="toggleMusic()">
+      🎵 Müziği Başlat
+    </button>
 
-    <div class="hint">
-      Not: Telefonlar müziği otomatik başlatmaz. 🎧<br>
-      Müzik için butona bir kez dokunman yeterli olmalı (bazen 2. dokunuş gerekebilir).
+    <button class="msg animate delay-4" onclick="toggleNote()">
+      💌 Mesajını Aç
+    </button>
+
+    <div class="hint animate delay-5">
+      Telefonlar müziği otomatik başlatmaz 🎧<br>
+      Müzik için butona dokunman yeterli (bazen 2. dokunuş gerekebilir).
     </div>
 
     <div class="note" id="note">
-      İlknur…<br><br>
-      Gülüşün içimi sakinleştiriyor, varlığın bana ev gibi geliyor.<br><br>
-      <b>Sevgililer Günümüz kutlu olsun 🌹</b><br><br>
-      — Seni çok seven biri 💞
+      Bugün Sevgililer Günüymüş…<br><br>
+
+      Ama benim için <b>25 Ağustos 2024</b>'ten beri <b>her gün</b> Sevgililer Günü.  
+      Her günüm ayrı heyecanlı, her anım ayrı huzurlu…<br><br>
+
+      Her geçen gün sana biraz daha âşık oluyorum.  
+      Her gün kendimi seninle biraz daha aşıyorum.  
+      Her seferinde seni şaşırtmayı çok seviyorum…<br><br>
+
+      Bu mesajı okurkenki o tatlı gülümsemeni,  
+      bir sonraki cümlede ne yazıyor diye merakla pırpır çarpan kalbini duymayı çok seviyorum.  
+      Sen iyi ki hayatıma girdin, iyi ki hayatımın neşesi oldun…<br><br>
+
+      Sen sevginin en güzel halisin ve iyi ki <b>benimsin</b>.<br><br>
+
+      <b>SENİ ÇOOO..OOOKK SEVİYORUM..</b> 💖<br><br>
+
+      — <i>Sana çok âşık olan adam</i>
     </div>
 
-    <!-- Mobil uyumluluk için muted + playsinline -->
+    <!-- Mobil uyumlu müzik -->
     <audio id="bgm" loop muted playsinline preload="auto">
       <source src="hanimefendi.mp3" type="audio/mpeg">
     </audio>
@@ -113,21 +169,15 @@
 
     function toggleMusic(){
       if(!playing){
-        // Mobilde güvenli yöntem: önce muted, sonra kullanıcı etkileşiminde unmute + play
         bgm.muted = false;
         bgm.volume = 1.0;
-
-        bgm.play().then(() => {
+        bgm.play().then(()=>{
           playing = true;
           playBtn.textContent = "⏸ Müziği Durdur";
-        }).catch((e) => {
-          // Bazı cihazlarda ilk deneme reddedilebilir, ikinci dokunuşta açılır
-          bgm.muted = false;
+        }).catch(()=>{
           alert("🔊 Müzik başlamadı. Lütfen butona bir kez daha dokun 💖");
-          console.log(e);
         });
-
-      } else {
+      }else{
         bgm.pause();
         playing = false;
         playBtn.textContent = "🎵 Müziği Başlat";
@@ -136,23 +186,22 @@
 
     function toggleNote(){
       note.style.display = (note.style.display === "block") ? "none" : "block";
-      spawnHearts(8);
+      spawnHearts(10);
     }
 
     function spawnHearts(count){
       for(let i=0;i<count;i++){
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.textContent = Math.random() > 0.25 ? "❤" : "🤍";
-        h.style.left = Math.random()*100 + "vw";
-        h.style.animationDuration = (Math.random()*3 + 4) + "s";
+        const h=document.createElement("div");
+        h.className="heart";
+        h.textContent=Math.random()>0.25?"❤":"🤍";
+        h.style.left=Math.random()*100+"vw";
+        h.style.animationDuration=(Math.random()*3+4)+"s";
         document.body.appendChild(h);
-        setTimeout(()=>h.remove(), 7000);
+        setTimeout(()=>h.remove(),7000);
       }
     }
 
-    // Sayfa açılışında küçük efekt
-    window.addEventListener("load", () => {
+    window.addEventListener("load",()=>{
       spawnHearts(6);
     });
   </script>
